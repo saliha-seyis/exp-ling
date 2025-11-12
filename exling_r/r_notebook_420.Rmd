@@ -1,0 +1,436 @@
+---
+title: "R Notebook420"
+output: html_notebook
+---
+
+```{r}
+#how to get to  my wd
+
+getwd()
+```
+
+```{r}
+3+4
+#addition
+```
+
+```{r}
+3*4
+#multiplication
+```
+
+```{r}
+12/2
+#division
+```
+
+```{r}
+2^3
+#two to the power of three
+```
+
+```{r}
+sqrt()
+#square root function
+```
+
+```{r}
+(2+3)*3
+#stacking mathematical options
+```
+
+```{r}
+2+(3*3)
+#stacking mathematical options 2
+```
+
+```{r}
+sqrt()
+#square root function
+```
+
+```{r}
+abs()
+#absolute value function
+```
+
+```{r}
+log(4)
+#logarithmic function
+```
+
+```{r}
+exp(4)
+#exponent function
+```
+
+```{r}
+x<-3
+1+x
+```
+
+```{r}
+mynumber<-4
+#creating a variable
+
+1+mynumber
+mynumber/4
+sqrt(mynumber)
+mynumber*2
+mynumber
+mynumber*mynumber
+mynumber+mynumber
+mynumber/mynumber
+```
+
+```{r}
+ls()
+#list function, retrieves a list of all objects in your current working environment
+```
+
+```{r}
+?ls
+#seeking help
+```
+
+```{r}
+morenumbers <- c(1,2,3,4)
+morenumbers
+#how to create vectors (set of variables)
+```
+
+```{r}
+morenumbers<-1:4
+morenumbers
+#alternative way to create a vector
+```
+
+```{r}
+mean(morenumbers)
+#mean of a set
+```
+
+```{r}
+median(morenumbers)
+#median of a set
+```
+
+```{r}
+sd(morenumbers)
+#standard deviation of a set
+```
+
+```{r}
+min(morenumbers)
+#minimum number in the set
+```
+
+```{r}
+max(morenumbers)
+#maximum number in the set
+```
+
+```{r}
+range(morenumbers)
+#range of the set
+```
+
+```{r}
+sum(morenumbers)
+#sum of the numbers in the set
+```
+
+```{r}
+7:40
+#the number in the first position is 7, and the 33th position is 39
+```
+
+```{r}
+positionexample<-2:7
+positionexample
+```
+
+```{r}
+positionexample[5]
+#number in the 5th position, which is 6
+```
+
+```{r}
+positionexample[3:5]
+#numbers in 3rd, 4th and 5th position
+```
+
+```{r}
+positionexample[c(2,6)]
+#the numbers in the 2nd and 6th position
+```
+
+```{r}
+students<-c("Ella", "Maddy", "Chelsea")
+instructors<-c('jacee', 'zach')
+students
+instructors
+```
+
+```{r}
+class(students)
+class(morenumbers)
+#type of the vector
+```
+
+```{r}
+myexling<-c("Yongja", "Yutong", "Saliha", "Jacee", "Mariam", "Aruzhan", "Kevin", "Ella", "Chelsea", "Utano", "Brendan", "Zimo", "Maddy", "Yang", "Fabiola", "Jill", "Emily", "Christian", "Steven")
+class(myexling)
+myexling[7]
+myexling[c(3,5,9)]
+myexling[2:8]
+```
+
+```{r}
+2==2
+#logical vector. logical operation (ıs two equal to two)
+2==3
+2!=3 
+#ıs two NOT equal to three
+```
+
+```{r}
+as.character
+#to treat particants as charecters if they are categorized with numbers
+```
+
+```{r}
+install.packages("tidyverse")
+#to install a package
+```
+
+```{r}
+library(tidyverse)
+#to use the package
+```
+
+```{r}
+
+```
+
+```{r}
+library(readxl)
+that_trace1 <- read_csv("C:/Users/salih/OneDrive/Masaüstü/Experimental Linguistics/exling_r/exling_r/data_raw/that_trace1.csv")
+View(that_trace1)
+```
+
+```{r}
+str(that_trace1)
+```
+
+```{r}
+library(readxl)
+that_trace1 <- read_excel("../exling_r/exling_r/data_raw/that_trace1.xlsx")
+View(that_trace1)
+```
+
+```{r}
+str(that_trace1)
+```
+
+```{r}
+that_trace1$that<-as.factor(that_trace1$that)
+that_trace1$extractionsite<-as.factor(that_trace1$extractionsite)
+str(that_trace1)
+```
+
+```{r}
+mean(that_trace1$age)
+sd(that_trace1$age)
+```
+
+```{r}
+that_trace1_english<-subset(that_trace1, language=="english")
+#how to subset data using the subset function and the logical vector stuff
+```
+
+```{r}
+that_trace1_young<-filter(that_trace1, age <= 40)
+that_trace1_nonEng<-filter(that_trace1, language != "english")
+```
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+library(readr)
+```
+
+```{r}
+that_trace1<-read_cvs('that_trace1.cvs')
+```
+
+```{r}
+ggplot(that_trace1, aes(x=subject, y=age))+geom_point()
+```
+
+```{r}
+ggplot(that_trace1, aes(x=age, y=subject))+geom_point()
+```
+
+```{r}
+mean(that_trace1$rating)
+sd(that_trace1$rating)
+```
+
+```{r}
+that_trace1%>%
+  filter(age<=40)%>%
+  ggplot(aes(x=age, y=subject))+geom_point()
+```
+
+```{r}
+that_trace1%>%
+  filter(age<=40, language=="english")%>%
+  ggplot(aes(x=age, y=subject))+geom_point()
+```
+
+```{r}
+descrip_that_trace1_subject<-
+  that_trace1%>%
+  group_by(subject, that, extractionsite)%>%
+  summarise(mean_rating=mean(rating))
+print(descrip_that_trace1_subject)
+#step1
+  
+```
+
+```{r}
+descrip_that_trace1<-
+  descrip_that_trace1_subject%>%
+  group_by(that, extractionsite)%>%
+  summarise(mean=mean(mean_rating, na.rm=T),
+sd=sd(mean_rating, na.rm=T))
+print(descrip_that_trace1)
+#step2
+```
+
+```{r}
+that_trace1%>%
+  group_by(subject, that, extractionsite)%>%
+  summarise(mean_rating=mean(rating))%>%
+  group_by(that, extractionsite)%>%
+  summarise(mean=mean(mean_rating, na.rm=T),
+sd=sd(mean_rating, na.rm=T))%>%print()
+#piping together
+```
+
+```{r}
+that_trace1%>%
+  group_by(subject, that, extractionsite)%>%
+  summarise(mean_rating=mean(rating), na.rm=T)%>%
+  ggplot(aes(x=that, y=mean_rating, color=extractionsite))+geom_boxplot()
+#creating a boxplot
+#na.rm=T is to get rid of the outliers
+```
+
+```{r}
+that_trace1%>%
+  group_by(subject, that, extractionsite)%>%
+  summarise(mean_rating=mean(rating), na.rm=T)%>%
+  ggplot(aes(x=extractionsite, y=mean_rating, color=that))+geom_boxplot()
+```
+
+```{r}
+that_trace1%>%
+  group_by(subject, that, extractionsite)%>%
+  summarise(mean_rating=mean(rating), na.rm=T)%>%
+  ggplot(aes(x=extractionsite, y=mean_rating, color=that))+geom_violin()
+#plotting a violin plot
+```
+
+```{r}
+with(that_trace1,{interaction.plot(that, extractionsite, rating, col=2.3)})
+```
+
+```{r}
+getwd()
+```
+
+```{r}
+ls()
+```
+
+```{r}
+morenumbers<-c(1,2,3,4)
+morenumbers
+morenumbers[-2]
+#retrieve everything except the second position
+
+morenumbers[2:3]
+#retrieve the second and the third position
+```
+
+```{r}
+library(readxl)
+library(tidyverse)
+```
+
+```{r}
+russian_case_practice <- read_excel("C:/Users/salih/OneDrive/Masaüstü/Experimental Linguistics/exling_r/exling_r/russian_case_practice.xlsx")
+str(russian_case_practice)
+```
+
+```{r}
+russian_case_practice<-russian_case_practice%>%
+  mutate(context=as.factor(context))%>%
+  mutate(case=as.factor(case))%>%
+  mutate(rating=as.numeric(rating), na.rm=T)%>% #to remove the outliers
+  mutate(age=as.numeric(age)) 
+#mutate code is to change the type of vectors, set them as factors etc
+```
+
+```{r}
+str(russian_case_practice)
+```
+
+```{r}
+
+#demographic info
+
+length(unique(russian_case_practice$subject)) #number of the subjects 
+
+russian_case_m <- russian_case_practice %>% 
+  filter(gender=="m")
+
+russian_case_f <- russian_case_practice %>% 
+  filter(gender=="f")
+
+length(unique(russian_case_m$subject))
+length(unique(russian_case_f$subject))
+
+
+```
+
+```{r}
+range(russian_case_practice$age)
+mean(russian_case_practice$age)
+sd(russian_case_practice$age)
+mean(russian_case_m$age)
+mean(russian_case_f$age)
+```
+
+```{r}
+
+descriptive_russian_case_practice <-
+
+russian_case_practice%>%
+  group_by(subject, context, case)%>%
+  summarise(mean_rating = mean(rating))%>%
+  group_by(context, case)%>%
+  summarise(mean=mean(mean_rating, na.rm=T),
+sd=sd(mean_rating, na.rm=T))%>%print()
+```
+
+```{r}
+russian_case_practice %>%
+  group_by(subject, context, case)%>%
+  summarise(mean_rating = mean(rating))%>%
+  ggplot(aes(x=context, y=mean_rating, color=case))+geom_boxplot()
+```

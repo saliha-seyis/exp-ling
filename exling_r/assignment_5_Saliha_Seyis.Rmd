@@ -1,0 +1,75 @@
+---
+title: "Assignment 5"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+```{r}
+library(readxl)
+library(tidyverse)
+```
+
+```{r}
+adverb1_1 <- read_excel("C:/Users/salih/OneDrive/Masaüstü/Experimental Linguistics/exling_r/exling_r/adverb1-1.xlsx")
+str(adverb1_1)
+```
+
+```{r}
+adverb1_1<-adverb1_1%>%
+  mutate(adv_combination=as.factor(adv_combination))%>%
+  mutate(sentence_type=as.factor(sentence_type))
+```
+
+```{r}
+str(adverb1_1)
+```
+
+```{r}
+length(unique(adverb1_1$subject)) 
+
+adverb1_1_m <- adverb1_1 %>% 
+  filter(gender=="m")
+
+adverb1_1_f <- adverb1_1 %>% 
+  filter(gender=="f")
+
+length(unique(adverb1_1_m$subject))
+length(unique(adverb1_1_f$subject))
+```
+
+```{r}
+range(adverb1_1$age)
+mean(adverb1_1$age)
+sd(adverb1_1$age)
+mean(adverb1_1_f$age)
+mean(adverb1_1_m$age)
+#the assignment sheet says native language but they are all native English speakers?
+```
+
+```{r}
+adverb.exp <- adverb1_1 %>%
+  filter(itemtype == "experimental")
+```
+
+```{r}
+descriptive_adverb_1_1 <-
+
+adverb.exp %>%
+  group_by(subject, sentence_type, adv_combination)%>%
+  summarise(mean_rating = mean(rating))%>%
+  group_by(sentence_type, adv_combination)%>%
+  summarise(mean=mean(mean_rating, na.rm=T),
+sd=sd(mean_rating, na.rm=T))%>%print()
+```
+
+```{r}
+adverb.exp %>%
+  group_by(subject, sentence_type, adv_combination)%>%
+  summarise(mean_rating = mean(rating))%>%
+  ggplot(aes(x=sentence_type, y=mean_rating, color=adv_combination))+geom_boxplot()
+```
+
+```{r}
+#interpretation: The theoretical claim that a wh-adverb cannot move over another wh-adverb is in line with the descriptive statistics we have. The participants rated the questions with double wh- adverbs the lowest. Overall, the question sentence type is rated lower than the declarative sentence type in both adverb combination conditions. We need further inferential statistical analysis to see if these differences are significant. 
+```
